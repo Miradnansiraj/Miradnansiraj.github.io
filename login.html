@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -29,10 +29,29 @@
                 <a class="nav-link" href="giphy.html">Giphy API Example</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="login.html">Login Example</a>
+                <a class="nav-link" href="login.php">Login Example</a>
               </li>
             </ul>
         </div>
     </nav>
+    <div class="card p-1 m-1 w-50 border-dark shadow rounded  text-white bg-info" style="height: 200px;">
+        <h4 class="card-header">Login example</h4>
+        <form action="config.php" method="post" id="formid">
+            <table>
+                <tr>
+                    <td><h7>username:</h7></td>
+                    <td><input type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <td><h7>password:</h7></td>
+                    <td><input type="password" name="password"><br></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Log in"></td>
+                </tr>
+                <tr><div id="resultText"></div></tr>
+            </table>
+        </form>
+    </div>
 </body>
 </html>
