@@ -1,8 +1,7 @@
 ﻿body {
-    background-color: #F5F5F5;
+    background-color: #F5F5F5 ;/* */
 }
 
-.carousel-control-next,
-.carousel-control-prev /*, .carousel-indicators */ {
-    filter: invert(100%);
+.card{
+    background-color: #BBBBBF;
 }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -34,5 +34,60 @@
             </ul>
         </div>
     </nav>
+    <div class="card p-1 m-1 w-50 border-dark shadow rounded  text-white bg-info" style="height: 200px;">
+        <h4 class="card-header">Login example</h4>
+        <form action="login.php" method="post" id="formid">
+            <table>
+                <tr>
+                    <td><h7>username:</h7></td>
+                    <td><input type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <td><h7>password:</h7></td>
+                    <td><input type="password" name="password"><br></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Log in"></td>
+                </tr>
+                <tr><div id="resultText"></div></tr>
+            </table>
+        </form>
+    </div>
+    <?php
+        $serverName = "DESKTOP-9G0Q1C0";
+        $connectionInfo = array(
+            "Database"=>"USERS",
+            "Uid"=>"sa",
+            "PWD"=>"1234"
+        );
+        $conn = sqlsrv_connect($serverName, $connectionInfo);
+        if($conn){
+            //echo "Connection established.";
+        }
+        else{
+            echo "Connection could not be established.";
+                die(print_r(sqlsrv_errors(),true));
+        }
+        $uname;
+        $pword;
+        if (isset($_POST['username']) && isset($_POST['password'])){
+            $tsql= "SELECT username, password FROM users;";
+            $getResults= sqlsrv_query($conn, $tsql);
+            //echo ("Reading data from table" . PHP_EOL);
+            if ($getResults == FALSE)
+                die(FormatErrors(sqlsrv_errors()));
+            while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+                //echo ($row['username'] . " " . $row['password']. PHP_EOL);
+                $uname = $row['username'];
+                $pword = $row['password'];
+            }
+            $isName = $_POST['username'] == $uname;
+            $ispass = $_POST['password'] == $pword;
+            if($isName && $ispass){
+                echo 'Login Succesful';
+            }
+            sqlsrv_free_stmt($getResults);
+        }
+    ?>
 </body>
 </html>
