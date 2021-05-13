@@ -1,0 +1,21 @@
+.suggest-list{
+  margin: 30px;
+}
+
+.video-page{
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.suggested img{
+  margin: 10px;
+}
+
+body {
+    background-color: #F5F5F5 ;/* */
+}
+
+.card{
+    background-color: #BBBBBF;
+}
