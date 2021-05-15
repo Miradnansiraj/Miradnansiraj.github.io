@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="main.js" type="text/javascript"></script>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/smoothie.js"></script>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark p-2">
+        <a class="navbar-brand h1" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <h1 class="m-3 p-3">ETH/BTC value</h1>
+    <p class="m-3 p-3"><strong> Price: <span id="price"></span></strong></p>
+    <canvas class="p-3 m-3" id="mycanvas" width="720" height="480"></canvas>
+    <script>
+        var baseurl = "https://api.binance.com";
+        var query = "/api/v3/depth?symbol=ETHUSDT&limit=10";
+        var ask;
+        var bid;
+        var smoothie = new SmoothieChart();
+        smoothie.streamTo(document.getElementById("mycanvas"));
+        // Data
+        var line1 = new TimeSeries();
+        // Add value to line every second
+        setInterval(function() {
+          $.ajax({
+              url: baseurl+query,
+              method: 'GET',
+              success: (result) => {
+                ask = result.asks[0];
+                console.log(ask[0]);
+              },
+              error: (err, response) => {
+                console.log(err.responseText);
+              }
+            });
+          console.log(ask);
+          line1.append(new Date().getTime(), ask[0]);
+          document.getElementById("price").innerHTML = ask[0];
+        }, 1000);
+        // Add to SmoothieChart
+        smoothie.addTimeSeries(line1, { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.4)', lineWidth:3 });        
+    </script>
+</body>
+</html>
